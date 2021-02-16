@@ -1,0 +1,44 @@
+{% extends 'app/base.html' %}
+
+{% block contenido %}
+
+<style>
+	html, body{
+		height: 100%;
+	}
+
+	#page-wrapper{
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		background-color: #eaeaea;
+	}
+
+	#success-box{
+		max-width: 800px;
+		height: auto;
+		background-color: #fff;
+		border:1px solid #888;
+		border-radius: 5px;
+		padding: 15px;
+	}
+
+	#success-box p{
+		font-size: 18px;
+	}
+
+</style>
+
+<<div class="section padding_layout_1 service_list">
+  <div class="container">
+    <div class="row">
+	<div id="success-box" class="content-block">
+		<h1>Agradecemos seu contato!</h1>
+		<p>Sua mensagem foi enviada com sucesso. Responderemos o más rápido possível </p>
+		<a id="back-btn" class="btn btn-success" href="{% url 'contacto' %}">voltar</a>
+	</div>
+</div></div></div>
+
+{% endblock contenido %}

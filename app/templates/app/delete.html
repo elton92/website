@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+
+{% block contenido %}
+
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+<!--              <h1 class="page-title">Services</h1>-->
+<!--              <ol class="breadcrumb">-->
+<!--&lt;!&ndash;                <li><a href="index.html">Home</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="active">Services</li>&ndash;&gt;-->
+<!--              </ol>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section padding_layout_1 service_list">
+  	<div class="container">
+    	<div class="row">
+        	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 contant_form">
+
+				<form action="" method="POST">
+					{% csrf_token %}
+					{{form.as_p}}
+					<p>Tens certeza que desejas eliminar <strong>{{item}}</strong>?</p>
+
+					<input class="btn btn-danger" type="submit" value="Confirmar">
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock contenido %}

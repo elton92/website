@@ -1,0 +1,124 @@
+{% extends 'app/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block contenido %}
+<div id="inner_banner" class="section inner_banner_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+<!--              <h1 class="page-title">Services</h1>-->
+<!--              <ol class="breadcrumb">-->
+<!--&lt;!&ndash;                <li><a href="index.html">Home</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="active">Services</li>&ndash;&gt;-->
+<!--              </ol>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section padding_layout_1 light_silver service_list">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+<!--          <div class="main_heading text_align_left">-->
+<!--            <h2>Noticas</h2>-->
+<!--            <p class="large">Easy and effective way to get your device repaired.</p>-->
+<!--          </div>-->
+        </div>
+      </div>
+    </div>
+      <form id="searchForm" method="GET">
+			{{myFilter.form|crispy}}
+			<input class="btn btn-primary" type="submit" value="search">
+		</form>
+    <div>
+    </div>
+      <hr>
+
+    <div class="row">
+
+        {% for post in posts %}
+        <div class="col-md-4 service_blog">
+            <div class="full">
+              <div class="service_img"> <img class="img-responsive" src="{{post.imagem.url}}" style="width:300px;height:250px;object-fit:cover;" alt="#" /> </div>
+              <div class="service_cont">
+                <a href="{% url 'post' post.slug %}"><h3 class="service_head">{{post.titulo}}</h3></a>
+                <p>{{post.sub_titulo}}</p>
+                  {% if request.user.is_authenticated %}
+							<a href="{% url 'update_post' post.slug %}">Editar</a>
+							<a href="{% url 'delete_post' post.slug %}">Delete</a>
+                  {% endif %}
+                  <hr>
+                  {% for tema in post.temas.all %}
+                    <span class="tags">{{tema}}</span>
+                  {% endfor %}
+                <div class="bt_cont"> <a class="btn sqaure_bt" href="{% url 'post' post.slug %}">Saber +++</a> </div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+      <hr>
+      <!-- Paginacion:::: -->
+      <div class="row">
+			{% if posts.has_other_pages %}
+
+				<ul class="pagination">
+
+					{% if posts.has_previous %}
+						<li class="page-item"><a data-page="{{posts.previous_page_number}}" href="?page={{posts.previous_page_number}}" class="page-link">&laquo</a></li>
+
+						<li class="page-item"><a data-page="1" href="?page=1" class="page-link">Pri</a></li>
+					{% endif %}
+
+
+					{% for i in posts.paginator.page_range %}
+						{% if posts.number == i %}
+
+							<li class="page-item"><a class="active page-link">{{i}}</a></li>
+
+						{% else %}
+
+							<li class="page-item"><a data-page="{{i}}" href="?page={{i}}" class="page-link">{{i}}</a></li>
+						{% endif %}
+
+					{% endfor %}
+
+					{% if posts.has_next %}
+						<li class="page-item"><a data-page="{{ posts.paginator.num_pages}} " href="?page={{posts.paginator.num_pages}}" class="page-link">Ult</a></li>
+
+						<li class="page-item"><a data-page="{{posts.next_page_number}}" href="?page={{posts.next_page_number}}" class="page-link">&raquo</a></li>
+
+					{% endif %}
+				</ul>
+
+			{% endif %}
+    </div>
+</div>
+
+<script>
+    let searchForm = document.getElementById('searchForm')
+    let pageLinks = document.getElementsByClassName('page-link')
+
+    for(var i=0; pageLinks.length > i; i++){
+        pageLinks[i].addEventListener('click', function(e){
+            e.preventDefault()
+            let page = this.dataset.page
+            console.log('Page:', page)
+            searchForm.innerHTML += `<input value="${page}" name="page" hidden >`
+            searchForm.submit()
+        })
+
+    }
+</script>
+
+
+{% endblock contenido %}
